@@ -4,6 +4,9 @@ package com.dmm.ignorer;
  * Created by waldekd on 2015-06-30.
  */
 public class Globals {
+    //Tag
+    public static final String TAG = "WDIgnorer";
+
     //changing this make sure that AndroidManifest.xml will be changed as well
     public static final String ACTION_SHOW_START_ACTIVITY = "com.dmm.ignorer.action.SHOW_START_ACTIVITY";
 

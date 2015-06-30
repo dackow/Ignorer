@@ -6,19 +6,30 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".StartForm"
             android:label="@string/title_activity_start_form"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="com.dmm.ignorer.action.SHOW_START_ACTIVITY" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name=".receivers.CallReceiver"
+            android:enabled="true"
+            android:exported="true" >
+
+            <intent-filter>
+                <action android:name="android.media.VOLUME_CHANGED_ACTION" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

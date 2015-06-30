@@ -4,13 +4,20 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.dmm.ignorer.receivers.CallReceiver;
 
 
 public class StartForm extends Activity {
@@ -26,6 +33,17 @@ public class StartForm extends Activity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        finalizeClosingActivity();
+        super.onBackPressed();
+    }
+
+    private void finalizeClosingActivity(){
+        cancelNotification();
+        setReceiverState(false);
+    }
+
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnStart:
@@ -38,22 +56,27 @@ public class StartForm extends Activity {
     }
 
     private void startApp() {
-        //register receiver
         //...
         if (notificationManager == null) {
             notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         }
         Notification notification = buildNotification();
         notificationManager.notify(Globals.NOTIF_CODE, notification);
+        setReceiverState(true);
         finish();
     }
 
     private void stopApp() {
-        //unregister receiver
-        cancelNotification();
+        finalizeClosingActivity();
         finish();
     }
 
+    private void setReceiverState(boolean enable){
+        PackageManager pm = getPackageManager();
+        ComponentName compName = new ComponentName(this,CallReceiver.class);
+        int operation = enable ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
+        pm.setComponentEnabledSetting(compName, operation, PackageManager.DONT_KILL_APP);
+    }
 
     private Notification buildNotification() {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
@@ -69,7 +92,9 @@ public class StartForm extends Activity {
 
         PendingIntent resultIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);//createPendingResult(Globals.REQ_CODE_SHOW_START_ACTIVITY, intent2fire, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(resultIntent);
-        return builder.build();
+        Notification notif =  builder.build();
+        notif.flags = Notification.FLAG_NO_CLEAR;
+        return notif;
     }
 
     private void cancelNotification() {
