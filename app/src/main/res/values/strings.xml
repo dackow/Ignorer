@@ -4,4 +4,10 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+
+    <string name="notif_text">Ignorer is running!</string>
+
+
+
 </resources>
