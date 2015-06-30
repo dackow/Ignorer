@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Ignorer</string>
-    <string name="title_activity_start_form">StartForm</string>
+    <string name="title_activity_start_form">Ignorant</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
