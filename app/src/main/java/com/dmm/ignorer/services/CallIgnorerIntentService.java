@@ -4,9 +4,11 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
+import android.widget.Toast;
 
-import com.dmm.ignorer.Globals;
 import com.dmm.ignorer.R;
 
 /**
@@ -34,6 +36,21 @@ public class CallIgnorerIntentService extends IntentService {
         isMuteCall = prefs.getBoolean(muteCallResourcesName, false);
         isIgnoreCall = prefs.getBoolean(ignoreCallsResourcesName, false);
 
+        final String text = isIgnoreCall ? "Call is being ignored" : isMuteCall ? "Call is being muted" : "";
+
+        Handler handler = new Handler(getMainLooper());
+
+        if (!TextUtils.isEmpty(text)) {
+            Runnable run = new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+
+                }
+            };
+
+            handler.post(run);
+        }
 
 
     }
