@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dmm.ignorer" >
+    package="com.dmm.ignorer">
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".StartForm"
             android:label="@string/title_activity_start_form"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +24,7 @@
         <receiver
             android:name=".receivers.CallReceiver"
             android:enabled="true"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.media.VOLUME_CHANGED_ACTION" />
             </intent-filter>
@@ -32,7 +32,7 @@
 
         <activity
             android:name=".preferences.MainPreferences"
-            android:label="@string/title_activity_main_preferences" >
+            android:label="@string/title_activity_main_preferences">
         </activity>
     </application>
 

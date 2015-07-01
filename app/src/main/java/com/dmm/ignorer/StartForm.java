@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.dmm.ignorer.preferences.MainPreferences;
 import com.dmm.ignorer.receivers.CallReceiver;
 
 
@@ -120,7 +121,8 @@ public class StartForm extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-
+            Intent prefAct = new Intent(this, MainPreferences.class);
+            startActivityForResult(prefAct, Globals.PREF_CODE);
             return true;
         }
 
