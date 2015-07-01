@@ -119,25 +119,11 @@ public class StartForm extends Activity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent prefAct = new Intent(this, MainPreferences.class);
-            startActivityForResult(prefAct, Globals.PREF_CODE);
+            startActivity(prefAct);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case Globals.PREF_CODE:
-
-                    break;
-                default:
-                    super.onActivityResult(requestCode, resultCode, data);
-                    break;
-            }
-        }
-
-    }
 }

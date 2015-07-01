@@ -19,4 +19,11 @@ public class Globals {
 
     //preferences code
     public static final int PREF_CODE = 0;
+
+//    //preferences name
+//    public static final String PREF_NAME = "IgnorerPreferences";
+
+    //services
+    public static final String CALL_IGNORE_SERVICE_NAME = "CallIgnoreServiceName";
+
 }
