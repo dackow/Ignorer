@@ -4,15 +4,12 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,7 +37,7 @@ public class StartForm extends Activity {
         super.onBackPressed();
     }
 
-    private void finalizeClosingActivity(){
+    private void finalizeClosingActivity() {
         cancelNotification();
         setReceiverState(false);
     }
@@ -72,9 +69,9 @@ public class StartForm extends Activity {
         finish();
     }
 
-    private void setReceiverState(boolean enable){
+    private void setReceiverState(boolean enable) {
         PackageManager pm = getPackageManager();
-        ComponentName compName = new ComponentName(this,CallReceiver.class);
+        ComponentName compName = new ComponentName(this, CallReceiver.class);
         int operation = enable ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
         pm.setComponentEnabledSetting(compName, operation, PackageManager.DONT_KILL_APP);
     }
@@ -93,7 +90,7 @@ public class StartForm extends Activity {
 
         PendingIntent resultIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);//createPendingResult(Globals.REQ_CODE_SHOW_START_ACTIVITY, intent2fire, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(resultIntent);
-        Notification notif =  builder.build();
+        Notification notif = builder.build();
         notif.flags = Notification.FLAG_NO_CLEAR;
         return notif;
     }
@@ -127,5 +124,20 @@ public class StartForm extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case Globals.PREF_CODE:
+
+                    break;
+                default:
+                    super.onActivityResult(requestCode, resultCode, data);
+                    break;
+            }
+        }
+
     }
 }

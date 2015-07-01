@@ -32,7 +32,7 @@
 
         <activity
             android:name=".preferences.MainPreferences"
-            android:label="@string/title_activity_main_preferences">
+            android:label="@string/title">
         </activity>
     </application>
 

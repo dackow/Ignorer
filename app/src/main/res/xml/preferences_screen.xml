@@ -1,0 +1,21 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/ignoringMode">
+        <CheckBoxPreference
+            android:id="@+id/muteCalls"
+            android:defaultValue="false"
+            android:key="muteCalls"
+            android:summary="@string/muteDesc"
+            android:title="@string/mute" />
+
+        <CheckBoxPreference
+            android:id="@+id/ignoreCalls"
+            android:defaultValue="false"
+            android:key="ignoreCalls"
+            android:summary="@string/ignoreCallsDesc"
+            android:title="@string/mute" />
+    </PreferenceCategory>
+
+
+
+
+</PreferenceScreen>
