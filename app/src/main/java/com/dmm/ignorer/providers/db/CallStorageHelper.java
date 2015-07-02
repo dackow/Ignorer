@@ -42,4 +42,7 @@ public class CallStorageHelper extends SQLiteOpenHelper {
         public static final String COLUMN_CATEGORY = "category";
         public static final String COLUMN_ACTIVE = "active";
     }
+
+    public static final String[] ALL_COLUMNS = {Contract.COLUMN_ID, Contract.COLUMN_PHONE_NUMBER, Contract.COLUMN_COMMENT, Contract.COLUMN_ACTIVE, Contract.COLUMN_CATEGORY};
+
 }
