@@ -67,6 +67,18 @@ public class CallDBManager {
         return callInfos;
     }
 
+    public CallInfo getCallToIgnore(long id){
+        CallInfo callInfo = null;
+        Cursor cursor = db.query(CallStorageHelper.Contract.TABLE_NAME, allColumns, createQueryById(id), null, null, null, null);
+
+        if(cursor.moveToFirst()){
+            callInfo = cursorToCallInfo(cursor);
+        }
+
+        cursor.close();
+        return callInfo;
+    }
+
     public boolean updateCallToIgnore(long id, String phone, String comment, String category, boolean enabled) {
         ContentValues values = new ContentValues();
         values.put(CallStorageHelper.Contract.COLUMN_PHONE_NUMBER, phone);
