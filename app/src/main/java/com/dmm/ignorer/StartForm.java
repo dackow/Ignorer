@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.dmm.ignorer.configure.Configure;
 import com.dmm.ignorer.preferences.MainPreferences;
 import com.dmm.ignorer.receivers.CallReceiver;
 
@@ -50,11 +51,18 @@ public class StartForm extends Activity {
             case R.id.btnStop:
                 stopApp();
                 break;
+            case R.id.btnConfigure:
+                configureApp();
+                break;
         }
     }
 
+    private void configureApp() {
+        Intent i = new Intent(this, Configure.class);
+        startActivity(i);
+    }
+
     private void startApp() {
-        //...
         if (notificationManager == null) {
             notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         }

@@ -47,31 +47,31 @@ public class CallDBManager {
         return newCallInfo;
     }
 
-    public void deleteCallToIgnore(CallInfo call){
+    public void deleteCallToIgnore(CallInfo call) {
         long id = call.getId();
         db.delete(CallStorageHelper.Contract.TABLE_NAME, createQueryById(id), null);
     }
 
-    public List<CallInfo> getAllCallsToIgnore(){
+    public List<CallInfo> getAllCallsToIgnore() {
         List<CallInfo> callInfos = new ArrayList<>();
         Cursor cursor = db.query(CallStorageHelper.Contract.TABLE_NAME, allColumns, null, null, null, null, null);
 
-        if(cursor.moveToFirst()){
-            do{
+        if (cursor.moveToFirst()) {
+            do {
                 CallInfo info = cursorToCallInfo(cursor);
                 callInfos.add(info);
-            }while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
 
         cursor.close();
         return callInfos;
     }
 
-    public CallInfo getCallToIgnore(long id){
+    public CallInfo getCallToIgnore(long id) {
         CallInfo callInfo = null;
         Cursor cursor = db.query(CallStorageHelper.Contract.TABLE_NAME, allColumns, createQueryById(id), null, null, null, null);
 
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             callInfo = cursorToCallInfo(cursor);
         }
 
@@ -89,11 +89,12 @@ public class CallDBManager {
         return db.update(CallStorageHelper.Contract.TABLE_NAME, values, createQueryById(id), null) > 0;
     }
 
-    public boolean setCallActive(CallInfo call, boolean enabled){
+    public boolean setCallActive(CallInfo call, boolean enabled) {
         ContentValues args = new ContentValues();
         args.put(CallStorageHelper.Contract.COLUMN_ACTIVE, enabled ? "Y" : "N");
         return db.update(CallStorageHelper.Contract.TABLE_NAME, args, createQueryById(call.getId()), null) > 0;
     }
+
 
     private String createQueryById(long id) {
         return String.format("%s = %d", CallStorageHelper.Contract.COLUMN_ID, id);
