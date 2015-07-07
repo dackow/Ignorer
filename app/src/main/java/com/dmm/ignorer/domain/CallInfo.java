@@ -10,6 +10,8 @@ public class CallInfo {
     private String category;
     private boolean active;
 
+
+
     public long getId() {
         return id;
     }

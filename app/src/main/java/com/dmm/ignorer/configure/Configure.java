@@ -4,15 +4,40 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import com.dmm.ignorer.R;
+import com.dmm.ignorer.adapters.ConfigureListAdapter;
+import com.dmm.ignorer.domain.CallInfo;
 
 public class Configure extends ActionBarActivity {
+    private ListView lvList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configure);
+
+        lvList = (ListView)findViewById(R.id.lvConfigure);
+
+        CallInfo c1 = new CallInfo();
+        c1.setActive(true);
+        c1.setCategory("P");
+        c1.setId(0);
+        c1.setComment("Comment");
+        c1.setPhone_number("509808144");
+
+        CallInfo c2 = new CallInfo();
+        c2.setActive(true);
+        c2.setCategory("G");
+        c2.setId(1);
+        c2.setComment("Comment 2");
+        c2.setPhone_number("502304426");
+
+        CallInfo[] data = new CallInfo[]{c1, c2};
+
+        ConfigureListAdapter adapter = new ConfigureListAdapter(this, R.layout.configure_list_adapter, data);
+        lvList.setAdapter(adapter);
     }
 
     @Override
