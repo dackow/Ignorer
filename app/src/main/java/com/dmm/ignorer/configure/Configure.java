@@ -1,17 +1,28 @@
 package com.dmm.ignorer.configure;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.provider.CallLog;
+import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
+import com.dmm.ignorer.Globals;
 import com.dmm.ignorer.R;
 import com.dmm.ignorer.adapters.ConfigureListAdapter;
 import com.dmm.ignorer.domain.CallInfo;
 
-public class Configure extends ActionBarActivity {
+public class Configure extends Activity implements View.OnClickListener{
     private ListView lvList;
+
+    private Button btnAddIgnored;
+    private Button btnAddIgnoredFromContacts;
+    private Button btnAddIgnoredFromCallList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +31,16 @@ public class Configure extends ActionBarActivity {
 
         lvList = (ListView)findViewById(R.id.lvConfigure);
 
+        btnAddIgnored = (Button)findViewById(R.id.btnAddIgnored);
+        btnAddIgnoredFromContacts = (Button)findViewById(R.id.btnAddIgnoredFromContacts);
+        btnAddIgnoredFromCallList = (Button)findViewById(R.id.btnAddIgnoredFromCallList);
+        btnAddIgnored.setOnClickListener(this);
+        btnAddIgnoredFromContacts.setOnClickListener(this);
+        btnAddIgnoredFromCallList.setOnClickListener(this);
+
+
         CallInfo c1 = new CallInfo();
-        c1.setActive(true);
+        c1.setActive(false);
         c1.setCategory("P");
         c1.setId(0);
         c1.setComment("Comment");
@@ -38,6 +57,19 @@ public class Configure extends ActionBarActivity {
 
         ConfigureListAdapter adapter = new ConfigureListAdapter(this, R.layout.configure_list_adapter, data);
         lvList.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_OK){
+            switch(requestCode){
+                case Globals.REQ_CODE_PICK_FROM_CALL_LOG:
+                    break;
+                case Globals.REQ_CODE_PICK_FROM_CONTACTS:
+                    break;
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -61,4 +93,25 @@ public class Configure extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent;
+        switch (v.getId()) {
+            case R.id.btnAddIgnored:
+                break;
+            case R.id.btnAddIgnoredFromCallList:
+                intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setType(CallLog.Calls.CONTENT_TYPE);
+                startActivityForResult(intent, Globals.REQ_CODE_PICK_FROM_CONTACTS);
+                break;
+            case R.id.btnAddIgnoredFromContacts:
+                intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                startActivityForResult(intent, Globals.REQ_CODE_PICK_FROM_CALL_LOG);
+                break;
+        }
+    }
+
+
 }
