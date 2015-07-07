@@ -46,7 +46,7 @@ public class ConfigureListAdapter extends ArrayAdapter<CallInfo>{
         }
 
         CallInfo callInfo = data[position];
-        //holder.image.setImageResource(callInfo.);
+        holder.image.setImageResource(callInfo.isActive() ? R.drawable.rsz_confirmation_icon : R.drawable.rsz_inactive);
         holder.text.setText(callInfo.getPhone_number());
 
         return row;
