@@ -4,7 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
+import com.dmm.ignorer.Globals;
 import com.dmm.ignorer.domain.CallInfo;
 
 import java.sql.SQLException;
@@ -15,7 +17,6 @@ import java.util.List;
  * Created by waldekd on 2015-07-02.
  */
 public class CallDBManager {
-    private static String[] allColumns;
     private SQLiteDatabase db;
     private CallStorageHelper helper;
 
@@ -36,13 +37,17 @@ public class CallDBManager {
         values.put(CallStorageHelper.Contract.COLUMN_PHONE_NUMBER, phone);
         values.put(CallStorageHelper.Contract.COLUMN_COMMENT, comment);
         values.put(CallStorageHelper.Contract.COLUMN_CATEGORY, category);
+        values.put(CallStorageHelper.Contract.COLUMN_ACTIVE, "Y");
 
         long insertId = db.insert(CallStorageHelper.Contract.TABLE_NAME, null, values);
 
-        Cursor cursor = db.query(CallStorageHelper.Contract.TABLE_NAME, allColumns, createQueryById(insertId), null, null, null, null);
-        cursor.moveToFirst();
-
-        CallInfo newCallInfo = cursorToCallInfo(cursor);
+        Cursor cursor = db.query(CallStorageHelper.Contract.TABLE_NAME, CallStorageHelper.ALL_COLUMNS, createQueryById(insertId), null, null, null, null);
+        CallInfo newCallInfo = null;
+        if(cursor.moveToFirst()) {
+            newCallInfo = cursorToCallInfo(cursor);
+        }else{
+            Log.e(Globals.TAG, "Error while inserting Db record");
+        }
         cursor.close();
         return newCallInfo;
     }
@@ -54,7 +59,7 @@ public class CallDBManager {
 
     public List<CallInfo> getAllCallsToIgnore() {
         List<CallInfo> callInfos = new ArrayList<>();
-        Cursor cursor = db.query(CallStorageHelper.Contract.TABLE_NAME, allColumns, null, null, null, null, null);
+        Cursor cursor = db.query(CallStorageHelper.Contract.TABLE_NAME, CallStorageHelper.ALL_COLUMNS, null, null, null, null, null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -69,7 +74,7 @@ public class CallDBManager {
 
     public CallInfo getCallToIgnore(long id) {
         CallInfo callInfo = null;
-        Cursor cursor = db.query(CallStorageHelper.Contract.TABLE_NAME, allColumns, createQueryById(id), null, null, null, null);
+        Cursor cursor = db.query(CallStorageHelper.Contract.TABLE_NAME, CallStorageHelper.ALL_COLUMNS, createQueryById(id), null, null, null, null);
 
         if (cursor.moveToFirst()) {
             callInfo = cursorToCallInfo(cursor);
