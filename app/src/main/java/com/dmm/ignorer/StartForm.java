@@ -18,7 +18,7 @@ import com.dmm.ignorer.configure.Configure;
 import com.dmm.ignorer.preferences.MainPreferences;
 import com.dmm.ignorer.receivers.CallReceiver;
 
-
+//some comment
 public class StartForm extends Activity {
     NotificationManager notificationManager = null;
 
